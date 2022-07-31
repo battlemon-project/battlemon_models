@@ -7,7 +7,7 @@ use rust_decimal::{Decimal, MathematicalOps};
 use serde::{Deserialize, Serialize};
 
 #[mixin::declare]
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct SaleAbstract {
     pub prev_owner: String,
     pub curr_owner: String,
@@ -21,7 +21,7 @@ pub struct SaleForContract {
 }
 
 #[mixin::insert(SaleAbstract)]
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct SaleForInserting {
     #[serde(with = "rust_decimal::serde::str")]
     pub price: Decimal,
@@ -75,5 +75,33 @@ impl From<SaleForContract> for SaleForInserting {
             token_id: sale.token_id,
             price,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_convert_from_sale_for_contract_to_sale_for_inserting() {
+        let one_near = 1_000_000_000_000_000_000_000_000;
+        let prev_owner = "alice.near".to_string();
+        let curr_owner = "bob.near".to_string();
+        let token_id = "123456789".to_string();
+        let sale_for_contract = SaleForContract {
+            prev_owner: prev_owner.clone(),
+            curr_owner: curr_owner.clone(),
+            token_id: token_id.clone(),
+            price: U128(one_near),
+        };
+
+        let actual_sale: SaleForInserting = sale_for_contract.into();
+        let expected_sale = SaleForInserting {
+            prev_owner,
+            curr_owner,
+            token_id,
+            price: Decimal::from(1),
+        };
+        assert_eq!(actual_sale, expected_sale);
     }
 }
