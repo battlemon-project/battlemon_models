@@ -1,8 +1,8 @@
-use fake::faker::chrono::en::DateTime;
-use fake::faker::lorem::en::Word;
-use fake::faker::number::raw::NumberWithFormat;
-use fake::{Dummy, Faker};
+use chrono::Utc;
+use fake::faker::{chrono::en::DateTime, lorem::en::Word, number::raw::NumberWithFormat};
+use fake::{locales::EN, Dummy, Fake, Faker};
 use rand::Rng;
+use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
