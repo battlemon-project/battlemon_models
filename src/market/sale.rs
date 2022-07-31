@@ -1,34 +1,79 @@
 use chrono::Utc;
 use fake::faker::{chrono::en::DateTime, lorem::en::Word, number::raw::NumberWithFormat};
 use fake::{locales::EN, Dummy, Fake, Faker};
+use near_sdk::json_types::U128;
 use rand::Rng;
-use rust_decimal::Decimal;
+use rust_decimal::{Decimal, MathematicalOps};
 use serde::{Deserialize, Serialize};
 
+#[mixin::declare]
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Sale {
-    pub id: i64,
+pub struct SaleAbstract {
     pub prev_owner: String,
     pub curr_owner: String,
     pub token_id: String,
-    #[serde(with = "rust_decimal::serde::str")]
-    pub price: Decimal,
-    pub date: chrono::DateTime<Utc>,
 }
 
-impl Dummy<Faker> for Sale {
+#[mixin::insert(SaleAbstract)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct SaleForContract {
+    pub price: U128,
+}
+
+#[mixin::insert(SaleAbstract)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct SaleForInserting {
+    #[serde(with = "rust_decimal::serde::str")]
+    pub price: Decimal,
+}
+
+impl Dummy<Faker> for SaleForInserting {
     fn dummy_with_rng<R: Rng + ?Sized>(_: &Faker, rng: &mut R) -> Self {
         let scale = rng.gen_range(0..=24);
         let lo = rng.gen();
         let mid = rng.gen();
         let price = Decimal::from_parts(lo, mid, 0, false, scale);
         Self {
-            id: Faker.fake(),
             prev_owner: format!("{}.near", Word().fake::<String>()),
             curr_owner: format!("{}.near", Word().fake::<String>()),
             token_id: NumberWithFormat(EN, "^########").fake::<String>(),
             price,
+        }
+    }
+}
+
+#[mixin::insert(SaleAbstract)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Sale {
+    pub id: i64,
+    pub date: chrono::DateTime<Utc>,
+    #[serde(with = "rust_decimal::serde::str")]
+    pub price: Decimal,
+}
+
+impl Dummy<Faker> for Sale {
+    fn dummy_with_rng<R: Rng + ?Sized>(_: &Faker, _rng: &mut R) -> Self {
+        let sale_without_id: SaleForInserting = Faker.fake();
+        Self {
+            id: Faker.fake(),
             date: DateTime().fake(),
+            prev_owner: sale_without_id.prev_owner,
+            curr_owner: sale_without_id.curr_owner,
+            token_id: sale_without_id.token_id,
+            price: sale_without_id.price,
+        }
+    }
+}
+
+impl From<SaleForContract> for SaleForInserting {
+    fn from(sale: SaleForContract) -> Self {
+        let price = Decimal::from(sale.price.0) / Decimal::new(10, 0).powu(24);
+
+        Self {
+            prev_owner: sale.prev_owner,
+            curr_owner: sale.curr_owner,
+            token_id: sale.token_id,
+            price,
         }
     }
 }
