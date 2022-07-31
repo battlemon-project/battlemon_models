@@ -8,7 +8,7 @@ market = []
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
-rust_decimal = { version = "1.23.1", features = ["serde-with-str"] }
+rust_decimal = { version = "1.23.1", features = ["serde-with-str", "maths"] }
 chrono = { version = "0.4.19", features = ["serde"] }
 fake = { version = "2.5.0", features = ["derive", "chrono", "rust_decimal"] }
 rand = { version = "0.8.5", features = ["std_rng"] }
