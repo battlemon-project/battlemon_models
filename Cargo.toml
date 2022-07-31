@@ -3,7 +3,15 @@ name = "battlemon_models"
 version = "0.1.0"
 edition = "2021"
 
+[features]
+market = []
+
 [dependencies]
+serde = { version = "1.0", features = ["derive"] }
+rust_decimal = { version = "1.23.1", features = ["serde-with-str"] }
+chrono = { version = "0.4.19", features = ["serde"] }
+fake = { version = "2.5.0", features = ["derive", "chrono", "rust_decimal"] }
+rand = { version = "0.8.5", features = ["std_rng"] }
 near-contract-standards = "4.0.0"
 near-sdk = "4.0.0"
 enum_dispatch = "0.3.7"
