@@ -15,3 +15,4 @@ rand = { version = "0.8.5", features = ["std_rng"] }
 near-contract-standards = "4.0.0"
 near-sdk = "4.0.0"
 enum_dispatch = "0.3.7"
+mixin = "0.2.0"
