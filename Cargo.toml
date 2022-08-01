@@ -4,15 +4,19 @@ version = "0.1.0"
 edition = "2021"
 
 [features]
-market = []
+market-contract = ["dep:near-sdk"]
+market-convert = ["dep:rust_decimal"]
+market = ["dep:rust_decimal", "dep:chrono"]
+nft = ["dep:near-sdk", "dep:near-contract-standards"]
+faker = ["dep:fake", "dep:rand"]
 
 [dependencies]
-serde = { version = "1.0", features = ["derive"] }
-rust_decimal = { version = "1.23.1", features = ["serde-with-str", "maths"] }
-chrono = { version = "0.4.19", features = ["serde"] }
-fake = { version = "2.5.0", features = ["derive", "chrono", "rust_decimal"] }
-rand = { version = "0.8.5", features = ["std_rng"] }
-near-contract-standards = "4.0.0"
-near-sdk = "4.0.0"
-enum_dispatch = "0.3.7"
+serde = { version = "1.0.140", features = ["derive"] }
+rust_decimal = { version = "1.23.1", features = ["serde-with-str", "maths"], optional = true }
+chrono = { version = "0.4.19", features = ["serde"], optional = true }
+fake = { version = "2.5.0", features = ["derive", "chrono", "rust_decimal"], optional = true }
+rand = { version = "0.8.5", features = ["std_rng"], optional = true }
+near-contract-standards = { version = "4.0.0", optional = true }
+near-sdk = { version = "4.0.0", optional = true }
+enum_dispatch = { version = "0.3.7", optional = true }
 mixin = "0.2.0"

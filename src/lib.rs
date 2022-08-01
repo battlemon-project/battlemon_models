@@ -1,3 +1,3 @@
-#[cfg(feature = "market")]
 pub mod market;
+#[cfg(feature = "nft")]
 pub mod nft;
