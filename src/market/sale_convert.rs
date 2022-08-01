@@ -1,6 +1,7 @@
+use crate::market::sale_contract::SaleForContract;
 use rust_decimal::{Decimal, MathematicalOps};
 
-impl From<SaleForContract> for SaleForInserting {
+impl From<SaleForContract> for crate::market::SaleForInserting {
     fn from(sale: SaleForContract) -> Self {
         let price = Decimal::from(sale.price.0) / Decimal::new(10, 0).powu(24);
 
