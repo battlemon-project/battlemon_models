@@ -4,22 +4,21 @@ version = "0.1.0"
 edition = "2021"
 
 [features]
-market-contract = ["dep:near-sdk", "dep:rand", "dep:getrandom"]
+market-contract = ["dep:near-sdk", "dep:rand_for_near"]
 market-convert = ["market", "dep:rust_decimal"]
 market-events = ["market-contract"]
-market = ["dep:rust_decimal", "dep:chrono"]
-nft = ["dep:near-sdk", "dep:near-contract-standards"]
-faker = ["dep:fake", "dep:rand", "dep:getrandom"]
+market = ["dep:rust_decimal", "dep:chrono", "dep:serde"]
+nft = ["dep:near-sdk", "dep:near-contract-standards", "dep:rand_for_near"]
+faker = ["dep:fake", "dep:rand"]
 
 [dependencies]
-serde = { version = "1.0.140", features = ["derive"] }
+serde = { version = "1.0.140", features = ["derive"], optional = true }
 rust_decimal = { version = "1.23.1", features = ["serde-with-str", "maths"], optional = true }
 chrono = { version = "0.4.19", features = ["serde"], optional = true }
 fake = { version = "2.5.0", features = ["derive", "chrono", "rust_decimal"], optional = true }
+rand_for_near = { package = "rand", version = "0.7.3", optional = true }
 rand = { version = "0.8.5", optional = true }
-getrandom = { version = "0.2.7", features = ["js"], optional = true }
 near-contract-standards = { version = "4.0.0", optional = true }
 near-sdk = { version = "4.0.0", optional = true }
 enum_dispatch = { version = "0.3.7", optional = true }
 mixin = "0.2.0"
-cfg-if = "1.0.0"
