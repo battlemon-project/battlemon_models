@@ -1,28 +1,13 @@
-pub mod sale_abstract;
-
-#[cfg(feature = "market")]
+pub mod ask;
+pub mod bid;
+pub mod events;
 pub mod paid;
-
-#[cfg(feature = "market")]
 pub mod sale;
 
-#[cfg(feature = "market-contract")]
-pub mod sale_contract;
-
-#[cfg(feature = "market-contract")]
-pub mod ask_contract;
-
-#[cfg(feature = "market-contract")]
-pub mod bid_contract;
-
 #[cfg(feature = "market-convert")]
-mod sale_convert;
+fn convert_to_decimal_near(yocto_near: &near_sdk::json_types::U128) -> rust_decimal::Decimal {
+    use rust_decimal::Decimal;
+    use rust_decimal::MathematicalOps;
 
-#[cfg(feature = "market-contract")]
-pub mod events;
-
-#[cfg(feature = "market")]
-pub use paid::Paid;
-
-#[cfg(feature = "market")]
-pub use sale::{Sale, SaleForInserting};
+    Decimal::from(yocto_near.0) / Decimal::new(10, 0).powu(24)
+}
