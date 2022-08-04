@@ -4,18 +4,19 @@ version = "0.1.0"
 edition = "2021"
 
 [features]
-market-contract = ["dep:near-sdk"]
+market-contract = ["dep:near-sdk", "dep:rand", "dep:getrandom"]
 market-convert = ["dep:rust_decimal"]
 market = ["dep:rust_decimal", "dep:chrono"]
 nft = ["dep:near-sdk", "dep:near-contract-standards"]
-faker = ["dep:fake", "dep:rand"]
+faker = ["dep:fake", "dep:rand", "dep:getrandom"]
 
 [dependencies]
 serde = { version = "1.0.140", features = ["derive"] }
 rust_decimal = { version = "1.23.1", features = ["serde-with-str", "maths"], optional = true }
 chrono = { version = "0.4.19", features = ["serde"], optional = true }
 fake = { version = "2.5.0", features = ["derive", "chrono", "rust_decimal"], optional = true }
-rand = { version = "0.8.5", features = ["std_rng"], optional = true }
+rand = { version = "0.8.5", optional = true }
+getrandom = { version = "0.2.7", features = ["js"], optional = true }
 near-contract-standards = { version = "4.0.0", optional = true }
 near-sdk = { version = "4.0.0", optional = true }
 enum_dispatch = { version = "0.3.7", optional = true }
