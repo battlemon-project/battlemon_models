@@ -1,4 +1,3 @@
-use crate::market::sale_abstract::SaleAbstract;
 use near_sdk::json_types::U128;
 
 #[mixin::insert(SaleAbstract)]
