@@ -1,4 +1,6 @@
-#[derive(serde::Deserialize)]
+use near_sdk::AccountId;
+
+#[derive(serde::Deserialize, serde::Serialize, Debug)]
 pub struct ContractConfig {
     top_contract_id: AccountId,
     nft_contract_id: AccountId,

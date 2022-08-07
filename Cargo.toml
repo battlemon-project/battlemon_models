@@ -10,7 +10,7 @@ market-events = ["market-contract"]
 market = ["dep:rust_decimal", "dep:chrono", "dep:serde"]
 nft = ["dep:near-sdk", "dep:near-contract-standards", "dep:rand_for_near"]
 faker = ["dep:fake", "dep:rand"]
-config = ["dep:serde"]
+config = ["dep:serde", "dep:near-sdk"]
 
 [dependencies]
 serde = { version = "1.0.140", features = ["derive"], optional = true }
