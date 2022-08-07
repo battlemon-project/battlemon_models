@@ -3,3 +3,6 @@ pub mod helpers_contract;
 pub mod market;
 #[cfg(feature = "nft")]
 pub mod nft;
+
+#[cfg(feature = "config")]
+pub mod config;
