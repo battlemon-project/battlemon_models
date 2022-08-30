@@ -18,3 +18,7 @@ where
 
     <[_; N]>::try_from(range).unwrap()
 }
+
+pub fn weights<const N: usize>() -> [u8; N] {
+    get_random_arr_range(0, 100)
+}
