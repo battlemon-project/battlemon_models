@@ -24,31 +24,31 @@ pub struct Lemon {
 impl Lemon {
     pub const TRAITS_COUNT: usize = 4;
 
-    pub fn from_random(nums: &[u8; Self::TRAITS_COUNT]) -> Self {
-        let [exo, eyes, face, teeth] = nums;
+    pub fn from_trait_weights(weights: &[u8; Self::TRAITS_COUNT]) -> Self {
+        let [exo, eyes, face, teeth] = weights;
 
         let exo = match exo {
-            0..=33 => Exo::BA01,
-            34..=66 => Exo::MA01,
-            _ => Exo::ZA01,
+            0..=49 => Exo::ExoSnowwhiteExoSkeletonAA02,
+            _ => Exo::ExoSteelExoskeletonAA01,
         };
 
         let eyes = match eyes {
-            0..=33 => Eyes::A01,
-            34..=66 => Eyes::B01,
-            _ => Eyes::Z01,
+            0..=49 => Eyes::EyesBlueAA01,
+            _ => Eyes::EyesGreenAA02,
         };
 
         let face = match face {
-            0..=33 => Face::A01,
-            34..=66 => Face::B01,
-            _ => Face::Z01,
+            0..=24 => Face::FaceSunglassesRA01,
+            25..=50 => Face::FaceGasMaskMA01,
+            51..=75 => Face::FaceNinjaBalaclavaNA01,
+            _ => Face::FaceCowboyScarfCA01,
         };
 
         let teeth = match teeth {
-            0..=33 => Teeth::A01,
-            34..=66 => Teeth::B01,
-            _ => Teeth::Z01,
+            0..=24 => Teeth::TeethGrgaAA02,
+            25..=50 => Teeth::TeethHollywoodAA01,
+            51..=75 => Teeth::TeethOldstyleAA04,
+            _ => Teeth::TeethSharpAA03,
         };
 
         Self {
@@ -84,8 +84,8 @@ impl BuildUrlQuery for Lemon {
             .expect("Couldn't get eyes from value")
             .as_str()
             .expect("Couldn't convert to str");
-        let head = value
-            .get("head")
+        let face = value
+            .get("face")
             .expect("Couldn't get head from value")
             .as_str()
             .expect("Couldn't convert to str");
@@ -95,7 +95,7 @@ impl BuildUrlQuery for Lemon {
             .as_str()
             .expect("Couldn't convert to str");
 
-        format!("?background=red&exo={exo}&cap={cap}&cloth={cloth}&eyes={eyes}&head={head}&teeth={teeth}")
+        format!("?background=red&exo={exo}&cap={cap}&cloth={cloth}&eyes={eyes}&face={face}&teeth={teeth}")
     }
 }
 
@@ -126,12 +126,14 @@ pub enum Eyes {
 )]
 #[serde(crate = "near_sdk::serde")]
 pub enum Face {
-    #[serde(rename = "ARM1_Head_A01")]
-    A01,
-    #[serde(rename = "ARM1_Head_B01")]
-    B01,
-    #[serde(rename = "ARM1_Head_Z01")]
-    Z01,
+    #[serde(rename = "Face_Ninja_Balaclava_NA_01")]
+    FaceNinjaBalaclavaNA01,
+    #[serde(rename = "Face_Gas_Mask_MA01")]
+    FaceGasMaskMA01,
+    #[serde(rename = "Face_Cowboy_Scarf_CA01")]
+    FaceCowboyScarfCA01,
+    #[serde(rename = "Face_Sunglasses_RA01")]
+    FaceSunglassesRA01,
 }
 
 #[derive(
