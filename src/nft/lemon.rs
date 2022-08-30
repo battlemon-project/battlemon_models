@@ -1,27 +1,31 @@
-use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
+use near_sdk::borsh::{BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::serde_json;
 
 use crate::nft::BuildUrlQuery;
+use crate::nft::{Back, Cap, ClothKind, ColdArm, FireArm};
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub struct Lemon {
-    pub cap: Cap,
-    pub cloth: Cloth,
     pub exo: Exo,
     pub eyes: Eyes,
-    pub head: Head,
+    pub face: Face,
     pub teeth: Teeth,
+    pub firearm: Option<FireArm>,
+    pub coldarm: Option<ColdArm>,
+    pub cloth: Option<ClothKind>,
+    pub cap: Option<Cap>,
+    pub back: Option<Back>,
 }
 
 impl Lemon {
     pub const TRAITS_COUNT: usize = 4;
 
     pub fn from_random(nums: &[u8; Self::TRAITS_COUNT]) -> Self {
-        let [exo, eyes, head, teeth] = nums;
+        let [exo, eyes, face, teeth] = nums;
 
         let exo = match exo {
             0..=33 => Exo::BA01,
@@ -35,10 +39,10 @@ impl Lemon {
             _ => Eyes::Z01,
         };
 
-        let head = match head {
-            0..=33 => Head::A01,
-            34..=66 => Head::B01,
-            _ => Head::Z01,
+        let face = match face {
+            0..=33 => Face::A01,
+            34..=66 => Face::B01,
+            _ => Face::Z01,
         };
 
         let teeth = match teeth {
@@ -47,16 +51,12 @@ impl Lemon {
             _ => Teeth::Z01,
         };
 
-        let cap = Cap::ZA01;
-        let cloth = Cloth::MA01;
-
         Self {
-            cap,
-            cloth,
             exo,
             eyes,
-            head,
+            face,
             teeth,
+            ..Default::default()
         }
     }
 }
@@ -100,56 +100,32 @@ impl BuildUrlQuery for Lemon {
 }
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub enum Exo {
-    #[serde(rename = "ARM1_Exo_BA01")]
-    BA01,
-    #[serde(rename = "ARM1_Exo_MA01")]
-    MA01,
-    #[serde(rename = "ARM1_Exo_ZA01")]
-    ZA01,
+    #[serde(rename = "Exo_Snowwhite_Exoskeleton_AA02")]
+    ExoSnowwhiteExoSkeletonAA02,
+    #[serde(rename = "Exo_Steel_Exoskeleton_AA01")]
+    ExoSteelExoskeletonAA01,
 }
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
-)]
-#[serde(crate = "near_sdk::serde")]
-pub enum Cap {
-    #[serde(rename = "ARM1_Cap_MA01")]
-    MA01,
-    #[serde(rename = "ARM1_Cap_ZA01")]
-    ZA01,
-}
-
-#[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
-)]
-#[serde(crate = "near_sdk::serde")]
-pub enum Cloth {
-    #[serde(rename = "ARM1_Cloth_MA01")]
-    MA01,
-}
-
-#[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub enum Eyes {
-    #[serde(rename = "ARM1_Eyes_A01")]
-    A01,
-    #[serde(rename = "ARM1_Eyes_B01")]
-    B01,
-    #[serde(rename = "ARM1_Eyes_Z01")]
-    Z01,
+    #[serde(rename = "Eyes_Blue_AA01")]
+    EyesBlueAA01,
+    #[serde(rename = "Eyes_Green_AA02")]
+    EyesGreenAA02,
 }
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
 )]
 #[serde(crate = "near_sdk::serde")]
-pub enum Head {
+pub enum Face {
     #[serde(rename = "ARM1_Head_A01")]
     A01,
     #[serde(rename = "ARM1_Head_B01")]
@@ -159,14 +135,16 @@ pub enum Head {
 }
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub enum Teeth {
-    #[serde(rename = "ARM1_Teeth_A01")]
-    A01,
-    #[serde(rename = "ARM1_Teeth_B01")]
-    B01,
-    #[serde(rename = "ARM1_Teeth_Z01")]
-    Z01,
+    #[serde(rename = "Teeth_Grga_AA02")]
+    TeethGrgaAA02,
+    #[serde(rename = "Teeth_Hollywood_AA01")]
+    TeethHollywoodAA01,
+    #[serde(rename = "Teeth_Oldstyle_AA04")]
+    TeethOldstyleAA04,
+    #[serde(rename = "Teeth_Sharp_AA03")]
+    TeethSharpAA03,
 }

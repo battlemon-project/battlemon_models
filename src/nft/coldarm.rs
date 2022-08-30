@@ -13,6 +13,7 @@ pub struct ColdArm {
 #[derive(
     Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, PartialEq, Debug, Default,
 )]
+#[serde(crate = "near_sdk::serde")]
 pub enum ColdArmKind {
     #[serde(rename = "ColdArms_Chopper_Knife_KA01")]
     ColdArmsChopperKnifeKa01,

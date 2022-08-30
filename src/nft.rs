@@ -1,9 +1,19 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
 
-pub use lemon::Lemon;
+pub use back::*;
+pub use cap::*;
+pub use cloth::*;
+pub use coldarm::*;
+pub use firearm::*;
+pub use lemon::*;
 
-pub mod lemon;
+mod back;
+mod cap;
+mod cloth;
+mod coldarm;
+mod firearm;
+mod lemon;
 
 #[derive(
     Serialize, Deserialize, Clone, Copy, BorshSerialize, BorshDeserialize, Debug, PartialEq,
@@ -11,6 +21,11 @@ pub mod lemon;
 #[serde(crate = "near_sdk::serde", rename_all = "snake_case", tag = "kind")]
 pub enum ModelKind {
     Lemon(Lemon),
+    FireArm(FireArm),
+    ColdArm(ColdArm),
+    Cloth(Cloth),
+    Back(Back),
+    Cap(Cap),
 }
 
 impl BuildUrlQuery for ModelKind {

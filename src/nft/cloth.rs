@@ -1,9 +1,10 @@
-use borsh_derive::{borsh_deserialize as BorshDeserialize, borsh_serialize as BorshSerialize};
-use serde_derive::{derive_deserialize as Deserialize, derive_serialize as Serialize};
+use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
+use near_sdk::serde::{Deserialize, Serialize};
 
 #[derive(
     Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
 )]
+#[serde(crate = "near_sdk::serde")]
 pub struct Cloth {
     pub kind: ClothKind,
 }
