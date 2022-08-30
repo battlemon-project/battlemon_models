@@ -1,13 +1,11 @@
-use near_sdk::borsh::{BorshDeserialize, BorshSerialize};
+use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
-use near_sdk::serde_json;
+use near_sdk::serde_json::{self, Map, Value};
 
-use crate::nft::BuildUrlQuery;
-use crate::nft::{Back, Cap, ClothKind, ColdArm, FireArm};
+use crate::nft::{Back, Cap, Cloth, ColdArm, FireArm};
+use crate::nft::{BuildUrlQuery, FromTraitWeights};
 
-#[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
-)]
+#[derive(Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, PartialEq, Debug)]
 #[serde(crate = "near_sdk::serde")]
 pub struct Lemon {
     pub exo: Exo,
@@ -16,17 +14,14 @@ pub struct Lemon {
     pub teeth: Teeth,
     pub firearm: Option<FireArm>,
     pub coldarm: Option<ColdArm>,
-    pub cloth: Option<ClothKind>,
+    pub cloth: Option<Cloth>,
     pub cap: Option<Cap>,
     pub back: Option<Back>,
 }
 
-impl Lemon {
-    pub const TRAITS_COUNT: usize = 4;
-
-    pub fn from_trait_weights(weights: &[u8; Self::TRAITS_COUNT]) -> Self {
-        let [exo, eyes, face, teeth] = weights;
-
+const LEMON_TRAITS_COUNT: usize = 4;
+impl FromTraitWeights<LEMON_TRAITS_COUNT> for Lemon {
+    fn from_trait_weights([exo, eyes, face, teeth]: &[u8; LEMON_TRAITS_COUNT]) -> Self {
         let exo = match exo {
             0..=49 => Exo::ExoSnowwhiteExoSkeletonAA02,
             _ => Exo::ExoSteelExoskeletonAA01,
@@ -56,51 +51,19 @@ impl Lemon {
             eyes,
             face,
             teeth,
-            ..Default::default()
+            firearm: None,
+            coldarm: None,
+            cloth: None,
+            cap: None,
+            back: None,
         }
     }
 }
 
-impl BuildUrlQuery for Lemon {
-    fn build_url_query(&self) -> String {
-        let value = serde_json::to_value(self).expect("Couldn't serialize `Lemon` into `Value`");
-        let exo = value
-            .get("exo")
-            .expect("Couldn't get exo from value")
-            .as_str()
-            .expect("Couldn't convert to str");
-        let cap = value
-            .get("cap")
-            .expect("Couldn't get cap from value")
-            .as_str()
-            .expect("Couldn't convert to str");
-        let cloth = value
-            .get("cloth")
-            .expect("Couldn't get cloth from value")
-            .as_str()
-            .expect("Couldn't convert to str");
-        let eyes = value
-            .get("eyes")
-            .expect("Couldn't get eyes from value")
-            .as_str()
-            .expect("Couldn't convert to str");
-        let face = value
-            .get("face")
-            .expect("Couldn't get head from value")
-            .as_str()
-            .expect("Couldn't convert to str");
-        let teeth = value
-            .get("teeth")
-            .expect("Couldn't get teeth from value")
-            .as_str()
-            .expect("Couldn't convert to str");
-
-        format!("?background=red&exo={exo}&cap={cap}&cloth={cloth}&eyes={eyes}&face={face}&teeth={teeth}")
-    }
-}
+impl BuildUrlQuery for Lemon {}
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub enum Exo {
@@ -111,7 +74,7 @@ pub enum Exo {
 }
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub enum Eyes {
@@ -122,7 +85,7 @@ pub enum Eyes {
 }
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub enum Face {
@@ -137,7 +100,7 @@ pub enum Face {
 }
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub enum Teeth {

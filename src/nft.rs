@@ -1,5 +1,6 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
+use near_sdk::serde_json::{self, Map, Value};
 
 pub use back::*;
 pub use cap::*;
@@ -15,9 +16,7 @@ mod coldarm;
 mod firearm;
 mod lemon;
 
-#[derive(
-    Serialize, Deserialize, Clone, Copy, BorshSerialize, BorshDeserialize, Debug, PartialEq,
-)]
+#[derive(Serialize, Deserialize, Clone, BorshSerialize, BorshDeserialize, Debug, PartialEq)]
 #[serde(crate = "near_sdk::serde", rename_all = "snake_case", tag = "kind")]
 pub enum ModelKind {
     Lemon(Lemon),
@@ -32,19 +31,37 @@ impl BuildUrlQuery for ModelKind {
     fn build_url_query(&self) -> String {
         match self {
             Self::Lemon(lemon) => lemon.build_url_query(),
+            Self::FireArm(firearm) => firearm.build_url_query(),
+            Self::ColdArm(coldarm) => coldarm.build_url_query(),
+            Self::Cloth(cloth) => cloth.build_url_query(),
+            Self::Back(back) => back.build_url_query(),
+            Self::Cap(cap) => cap.build_url_query(),
         }
     }
 }
 
 pub trait BuildUrlQuery {
-    fn build_url_query(&self) -> String;
+    fn build_url_query(&self) -> String
+    where
+        Self: Serialize,
+    {
+        let value = serde_json::to_value(self).expect("Couldn't serialize `Self` into `Value`");
+        let map = value
+            .as_object()
+            .expect("Failed to convert `Value` into `Map`");
+
+        let mut query = String::from("?");
+        for (idx, (key, value)) in map.iter().enumerate() {
+            if idx != 0 {
+                query.push('&');
+            }
+            query.push_str(&format!("{}={}", key, value));
+        }
+
+        query
+    }
 }
-// impl ModelKind {
-//     pub fn is_compatible(&self, model_kind: &Self) -> bool {
-//         match (self, model_kind) {
-//             (ModelKind::Lemon(_), ModelKind::Weapon(_)) => true,
-//             (ModelKind::Weapon(_), ModelKind::Suppressor(_)) => true,
-//             _ => false,
-//         }
-//     }
-// }
+
+pub trait FromTraitWeights<const COUNT: usize> {
+    fn from_trait_weights(weights: &[u8; COUNT]) -> Self;
+}

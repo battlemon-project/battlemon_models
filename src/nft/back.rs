@@ -1,8 +1,9 @@
+use crate::nft::{BuildUrlQuery, FromTraitWeights};
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub struct Back {
@@ -10,7 +11,7 @@ pub struct Back {
 }
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub enum BackKind {
@@ -22,4 +23,13 @@ pub enum BackKind {
     BackTacticalBackpackMA01,
     #[serde(rename = "Back_Edventurer_Backpack_PA01")]
     BackEdventurerBackpackPA01,
+}
+
+impl BuildUrlQuery for Back {}
+
+const BACK_TRAITS_COUNT: usize = 1;
+impl FromTraitWeights<BACK_TRAITS_COUNT> for Back {
+    fn from_trait_weights([weight]: &[u8; BACK_TRAITS_COUNT]) -> Self {
+        todo!()
+    }
 }

@@ -1,8 +1,9 @@
+use crate::nft::{BuildUrlQuery, FromTraitWeights};
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub struct Cap {
@@ -10,7 +11,7 @@ pub struct Cap {
 }
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub enum CapKind {
@@ -46,4 +47,13 @@ pub enum CapKind {
     CapCockedHatPA01,
     #[serde(rename = "Cap_Pirate_Bandana_PA02")]
     CapPirateBandanaPA02,
+}
+
+impl BuildUrlQuery for Cap {}
+
+const CAP_TRAITS_COUNT: usize = 1;
+impl FromTraitWeights<CAP_TRAITS_COUNT> for Cap {
+    fn from_trait_weights([weight]: &[u8; CAP_TRAITS_COUNT]) -> Self {
+        todo!()
+    }
 }

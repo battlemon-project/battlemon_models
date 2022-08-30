@@ -1,8 +1,9 @@
+use crate::nft::{BuildUrlQuery, FromTraitWeights};
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub struct Cloth {
@@ -10,7 +11,7 @@ pub struct Cloth {
 }
 
 #[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug, Default,
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
 )]
 #[serde(crate = "near_sdk::serde")]
 pub enum ClothKind {
@@ -28,4 +29,13 @@ pub enum ClothKind {
     ClothCheefSashKA01,
     #[serde(rename = "Cloth_Chain_Gold_RA01")]
     ClothChainGoldRA01,
+}
+
+impl BuildUrlQuery for Cloth {}
+
+const CLOTH_TRAITS_COUNT: usize = 1;
+impl FromTraitWeights<CLOTH_TRAITS_COUNT> for Cloth {
+    fn from_trait_weights([weight]: &[u8; CLOTH_TRAITS_COUNT]) -> Self {
+        todo!()
+    }
 }
