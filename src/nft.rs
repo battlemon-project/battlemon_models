@@ -16,6 +16,17 @@ mod coldarm;
 mod firearm;
 mod lemon;
 
+#[derive(Serialize, Deserialize, Clone, Copy, BorshSerialize, BorshDeserialize, Debug)]
+#[serde(crate = "near_sdk::serde", rename_all = "snake_case")]
+pub enum NftKind {
+    Lemon,
+    Firearm,
+    Coldarm,
+    Cloth,
+    Back,
+    Cap,
+}
+
 #[derive(Serialize, Deserialize, Clone, BorshSerialize, BorshDeserialize, Debug, PartialEq)]
 #[serde(crate = "near_sdk::serde", rename_all = "snake_case", tag = "kind")]
 pub enum ModelKind {
