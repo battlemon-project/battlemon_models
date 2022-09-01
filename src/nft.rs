@@ -1,3 +1,4 @@
+use near_contract_standards::non_fungible_token::TokenId;
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::serde_json::{self, Map, Value};
@@ -20,8 +21,8 @@ mod lemon;
 #[serde(crate = "near_sdk::serde", rename_all = "snake_case")]
 pub enum NftKind {
     Lemon,
-    Firearm,
-    Coldarm,
+    FireArm,
+    ColdArm,
     Cloth,
     Back,
     Cap,
@@ -74,5 +75,5 @@ pub trait BuildUrlQuery {
 }
 
 pub trait FromTraitWeights<const COUNT: usize> {
-    fn from_trait_weights(weights: &[u8; COUNT]) -> Self;
+    fn from_trait_weights(token_id: &TokenId, weights: &[u8; COUNT]) -> Self;
 }

@@ -1,12 +1,13 @@
 use crate::nft::{BuildUrlQuery, FromTraitWeights};
+use near_contract_standards::non_fungible_token::TokenId;
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
-use std::collections::HashSet;
 
 #[derive(Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, PartialEq, Debug)]
 #[serde(crate = "near_sdk::serde")]
 pub struct ColdArm {
-    pub kind: ColdArmKind,
+    pub token_id: TokenId,
+    pub flavour: ColdArmKind,
 }
 
 #[derive(Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, PartialEq, Debug)]
@@ -24,7 +25,16 @@ impl BuildUrlQuery for ColdArm {}
 
 const COLDARM_TRAITS_COUNT: usize = 1;
 impl FromTraitWeights<COLDARM_TRAITS_COUNT> for ColdArm {
-    fn from_trait_weights([weight]: &[u8; COLDARM_TRAITS_COUNT]) -> Self {
-        todo!()
+    fn from_trait_weights(token_id: &TokenId, [weight]: &[u8; COLDARM_TRAITS_COUNT]) -> Self {
+        let flavour = match weight {
+            0..=32 => ColdArmKind::ColdArmsChopperKnifeKa01,
+            33..=66 => ColdArmKind::ColdArmsGrapplingHookPa01,
+            _ => ColdArmKind::ColdArmsBottleRoseRa01,
+        };
+
+        Self {
+            token_id: token_id.clone(),
+            flavour,
+        }
     }
 }

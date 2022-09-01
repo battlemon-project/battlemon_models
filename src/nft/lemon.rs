@@ -1,3 +1,4 @@
+use near_contract_standards::non_fungible_token::TokenId;
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::serde_json::{self, Map, Value};
@@ -21,7 +22,10 @@ pub struct Lemon {
 
 const LEMON_TRAITS_COUNT: usize = 4;
 impl FromTraitWeights<LEMON_TRAITS_COUNT> for Lemon {
-    fn from_trait_weights([exo, eyes, face, teeth]: &[u8; LEMON_TRAITS_COUNT]) -> Self {
+    fn from_trait_weights(
+        _: &TokenId,
+        [exo, eyes, face, teeth]: &[u8; LEMON_TRAITS_COUNT],
+    ) -> Self {
         let exo = match exo {
             0..=49 => Exo::ExoSnowwhiteExoSkeletonAA02,
             _ => Exo::ExoSteelExoskeletonAA01,

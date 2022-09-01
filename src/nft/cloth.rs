@@ -1,13 +1,13 @@
 use crate::nft::{BuildUrlQuery, FromTraitWeights};
+use near_contract_standards::non_fungible_token::TokenId;
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
 
-#[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
-)]
+#[derive(Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, PartialEq, Debug)]
 #[serde(crate = "near_sdk::serde")]
 pub struct Cloth {
-    pub kind: ClothKind,
+    pub token_id: TokenId,
+    pub flavour: ClothKind,
 }
 
 #[derive(
@@ -35,7 +35,20 @@ impl BuildUrlQuery for Cloth {}
 
 const CLOTH_TRAITS_COUNT: usize = 1;
 impl FromTraitWeights<CLOTH_TRAITS_COUNT> for Cloth {
-    fn from_trait_weights([weight]: &[u8; CLOTH_TRAITS_COUNT]) -> Self {
-        todo!()
+    fn from_trait_weights(token_id: &TokenId, [weight]: &[u8; CLOTH_TRAITS_COUNT]) -> Self {
+        let flavour = match weight {
+            0..=14 => ClothKind::ClothSkullBeltPA01,
+            15..=29 => ClothKind::ClothBandolierMA02,
+            30..=44 => ClothKind::ClothPonchoCA01,
+            45..=59 => ClothKind::ClothNinjaWaistbandNA01,
+            60..=74 => ClothKind::ClothEasternArmorBeltNA02,
+            75..=89 => ClothKind::ClothCheefSashKA01,
+            _ => ClothKind::ClothChainGoldRA01,
+        };
+
+        Self {
+            token_id: token_id.clone(),
+            flavour,
+        }
     }
 }
