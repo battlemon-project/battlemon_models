@@ -1,7 +1,6 @@
 use near_contract_standards::non_fungible_token::TokenId;
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
-use near_sdk::serde_json::{self, Map, Value};
 
 pub use back::*;
 pub use cap::*;
