@@ -56,7 +56,7 @@ pub trait BuildUrlQuery {
     where
         Self: Serialize,
     {
-        let value = serde_json::to_value(self).expect("Couldn't serialize `Self` into `Value`");
+        let value = near_sdk::serde_json::to_value(self).expect("Couldn't serialize `Self` into `Value`");
         let map = value
             .as_object()
             .expect("Failed to convert `Value` into `Map`");
