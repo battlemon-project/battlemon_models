@@ -19,6 +19,8 @@ pub enum ColdArmKind {
     ColdArmsGrapplingHookPa01,
     #[serde(rename = "ColdArms_Bottle_Rose_RA01")]
     ColdArmsBottleRoseRa01,
+    #[serde(rename = "ColdArms_Katana_NA01")]
+    ColdArmsKatanaNa01,
 }
 
 impl BuildUrlQuery for ColdArm {}
