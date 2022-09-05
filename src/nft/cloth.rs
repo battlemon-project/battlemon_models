@@ -37,12 +37,11 @@ const CLOTH_TRAITS_COUNT: usize = 1;
 impl FromTraitWeights<CLOTH_TRAITS_COUNT> for Cloth {
     fn from_trait_weights(token_id: &TokenId, [weight]: &[u8; CLOTH_TRAITS_COUNT]) -> Self {
         let flavour = match weight {
-            0..=14 => ClothKind::ClothSkullBeltPA01,
-            15..=29 => ClothKind::ClothBandolierMA02,
-            30..=44 => ClothKind::ClothPonchoCA01,
-            45..=59 => ClothKind::ClothNinjaWaistbandNA01,
-            60..=74 => ClothKind::ClothEasternArmorBeltNA02,
-            75..=89 => ClothKind::ClothCheefSashKA01,
+            0..=16 => ClothKind::ClothSkullBeltPA01,
+            17..=32 => ClothKind::ClothBandolierMA02,
+            33..=48 => ClothKind::ClothNinjaWaistbandNA01,
+            49..=64 => ClothKind::ClothEasternArmorBeltNA02,
+            65..=80 => ClothKind::ClothCheefSashKA01,
             _ => ClothKind::ClothChainGoldRA01,
         };
 
