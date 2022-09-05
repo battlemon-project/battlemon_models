@@ -29,9 +29,10 @@ const COLDARM_TRAITS_COUNT: usize = 1;
 impl FromTraitWeights<COLDARM_TRAITS_COUNT> for ColdArm {
     fn from_trait_weights(token_id: &TokenId, [weight]: &[u8; COLDARM_TRAITS_COUNT]) -> Self {
         let flavour = match weight {
-            0..=32 => ColdArmKind::ColdArmsChopperKnifeKa01,
-            33..=66 => ColdArmKind::ColdArmsGrapplingHookPa01,
-            _ => ColdArmKind::ColdArmsBottleRoseRa01,
+            0..=24 => ColdArmKind::ColdArmsChopperKnifeKa01,
+            25..=49 => ColdArmKind::ColdArmsGrapplingHookPa01,
+            50..=75 => ColdArmKind::ColdArmsBottleRoseRa01,
+            _ => ColdArmKind::ColdArmsKatanaNa01,
         };
 
         Self {
