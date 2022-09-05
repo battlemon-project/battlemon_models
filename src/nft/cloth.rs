@@ -20,8 +20,8 @@ pub enum ClothKind {
     #[serde(rename = "Cloth_Bandolier_MA02")]
     ClothBandolierMA02,
     #[serde(rename = "Cloth_Poncho_CA01")]
-    ClothPonchoCA01,
-    #[serde(rename = "Cloth_Ninja_Waistband_NA01")]
+    // ClothPonchoCA01,
+    // #[serde(rename = "Cloth_Ninja_Waistband_NA01")]
     ClothNinjaWaistbandNA01,
     #[serde(rename = "Cloth_Eastern_Armor_Belt_NA02")]
     ClothEasternArmorBeltNA02,
