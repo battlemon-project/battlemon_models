@@ -16,8 +16,8 @@ pub enum FireArmKind {
     FireArmsAssaultRifleAA01,
     #[serde(rename = "FireArms_Assault_Rifle_AA02")]
     FireArmsAssaultRifleAA02,
-    #[serde(rename = "FireArms_Handgun_SMG_AA02")]
-    FireArmsHandgunSMGAA02,
+    #[serde(rename = "FireArms_Handgun_SMG_AA04")]
+    FireArmsHandgunSMGAA04,
     #[serde(rename = "FireArms_Grenade_Launcher_AA03")]
     FireArmsGrenadeLauncherAA03,
     #[serde(rename = "FireArms_Revolver_CA01")]
