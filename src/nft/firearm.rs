@@ -32,7 +32,7 @@ impl FromTraitWeights<FIREARM_TRAITS_COUNT> for FireArm {
         let flavour = match weight {
             0..=19 => FireArmKind::FireArmsAssaultRifleAA01,
             20..=39 => FireArmKind::FireArmsAssaultRifleAA02,
-            40..=59 => FireArmKind::FireArmsHandgunSMGAA02,
+            40..=59 => FireArmKind::FireArmsHandgunSMGAA04,
             60..=79 => FireArmKind::FireArmsGrenadeLauncherAA03,
             _ => FireArmKind::FireArmsRevolverCA01,
         };
