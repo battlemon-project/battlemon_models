@@ -10,6 +10,7 @@ use crate::nft::{BuildUrlQuery, FromTraitWeights};
 pub struct Lemon {
     pub exo: Exo,
     pub eyes: Eyes,
+    pub head: Head,
     pub face: Face,
     pub teeth: Teeth,
     pub fire_arm: Option<FireArm>,
@@ -74,6 +75,17 @@ pub enum Exo {
     ExoSnowwhiteExoSkeletonAA02,
     #[serde(rename = "Exo_Steel_Exoskeleton_AA01")]
     ExoSteelExoskeletonAA01,
+}
+
+#[derive(
+    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, Copy, PartialEq, Debug,
+)]
+#[serde(crate = "near_sdk::serde")]
+pub enum Head {
+    #[serde(rename = "Head_Fresh_Lemon_AA01")]
+    HeadFreshLemonAA01,
+    #[serde(rename = "Head_Zombie_ZA01")]
+    HeadZombieZA01,
 }
 
 #[derive(

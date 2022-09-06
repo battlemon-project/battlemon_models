@@ -1,20 +1,16 @@
 use crate::nft::{BuildUrlQuery, FromTraitWeights};
+use near_contract_standards::non_fungible_token::TokenId;
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
-use near_contract_standards::non_fungible_token::TokenId;
 
-#[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone,  PartialEq, Debug,
-)]
+#[derive(Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, PartialEq, Debug)]
 #[serde(crate = "near_sdk::serde")]
 pub struct Back {
     pub token_id: TokenId,
     pub flavour: BackKind,
 }
 
-#[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone,  PartialEq, Debug,
-)]
+#[derive(Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, PartialEq, Debug)]
 #[serde(crate = "near_sdk::serde")]
 pub enum BackKind {
     #[serde(rename = "Back_Insecticide_bottle_ZA01")]
@@ -23,8 +19,8 @@ pub enum BackKind {
     BackBombBarrelPA02,
     #[serde(rename = "Back_Tactical_Backpack_MA01")]
     BackTacticalBackpackMA01,
-    #[serde(rename = "Back_Edventurer_Backpack_PA01")]
-    BackEdventurerBackpackPA01,
+    #[serde(rename = "Back_Adventurer_Backpack_PA01")]
+    BackAdventurerBackpackPA01,
 }
 
 impl BuildUrlQuery for Back {}
@@ -36,7 +32,7 @@ impl FromTraitWeights<BACK_TRAITS_COUNT> for Back {
             0..=24 => BackKind::BackInsecticideBottleZA01,
             25..=49 => BackKind::BackBombBarrelPA02,
             50..=74 => BackKind::BackTacticalBackpackMA01,
-            _ => BackKind::BackEdventurerBackpackPA01,
+            _ => BackKind::BackAdventurerBackpackPA01,
         };
 
         Self {
