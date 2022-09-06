@@ -20,11 +20,11 @@ pub struct Lemon {
     pub back: Option<Back>,
 }
 
-const LEMON_TRAITS_COUNT: usize = 4;
+const LEMON_TRAITS_COUNT: usize = 5;
 impl FromTraitWeights<LEMON_TRAITS_COUNT> for Lemon {
     fn from_trait_weights(
         _: &TokenId,
-        [exo, eyes, face, teeth]: &[u8; LEMON_TRAITS_COUNT],
+        [exo, eyes, head, face, teeth]: &[u8; LEMON_TRAITS_COUNT],
     ) -> Self {
         let exo = match exo {
             0..=49 => Exo::ExoSnowwhiteExoSkeletonAA02,
@@ -34,6 +34,11 @@ impl FromTraitWeights<LEMON_TRAITS_COUNT> for Lemon {
         let eyes = match eyes {
             0..=49 => Eyes::EyesBlueAA01,
             _ => Eyes::EyesGreenAA02,
+        };
+
+        let head = match head {
+            0..=49 => Head::HeadFreshLemonAA01,
+            _ => Head::HeadZombieZA01,
         };
 
         let face = match face {
@@ -53,6 +58,7 @@ impl FromTraitWeights<LEMON_TRAITS_COUNT> for Lemon {
         Self {
             exo,
             eyes,
+            head,
             face,
             teeth,
             fire_arm: None,
