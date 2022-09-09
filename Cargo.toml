@@ -4,11 +4,21 @@ version = "0.1.0"
 edition = "2021"
 
 [features]
+# models for battlemon market contract
 market-contract = ["dep:near-sdk", "dep:rand_for_near"]
+# models for nft contract
+nft-contract = ["dep:near-sdk", "dep:near-contract-standards", "dep:rand_for_near"]
+# impl for converting among different markets models
 market-convert = ["market", "dep:rust_decimal"]
+# impl for converting among different markets models
+nft-convert = ["nft"]
+# models for market events (ask, bid, etc..)
 market-events = ["market-contract"]
+# models for nft events (assebmle, disassemble, etc..)
+nft-events = ["nft-contract"]
+# market models for indexer and rest services
 market = ["dep:rust_decimal", "dep:chrono", "dep:serde"]
-nft = ["dep:near-sdk", "dep:near-contract-standards", "dep:rand_for_near"]
+nft = ["nft-contract", "dep:sqlx-core", "dep:serde"]
 faker = ["dep:fake", "dep:rand"]
 config = ["dep:serde", "dep:near-sdk"]
 
@@ -22,4 +32,5 @@ rand = { version = "0.8.5", optional = true }
 near-contract-standards = { version = "4.0.0", optional = true }
 near-sdk = { version = "4.0.0", optional = true }
 enum_dispatch = { version = "0.3.7", optional = true }
+sqlx-core = { version = "0.6.0", features = ["json", "runtime-tokio-rustls"], optional = true }
 mixin = "0.2.0"

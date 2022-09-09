@@ -1,7 +1,6 @@
-#[cfg(any(feature = "market-contract", feature = "nft"))]
+#[cfg(any(feature = "market-contract", feature = "nft-contract"))]
 pub mod helpers_contract;
 pub mod market;
-#[cfg(feature = "nft")]
 pub mod nft;
 
 #[cfg(feature = "config")]
