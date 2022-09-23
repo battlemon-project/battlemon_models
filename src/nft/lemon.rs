@@ -37,7 +37,7 @@ impl FromTraitWeights<LEMON_TRAITS_COUNT> for Lemon {
         };
 
         let head = match head {
-            0..=49 => Head::HeadFreshLemonAA01,
+            0..=80 => Head::HeadFreshLemonAA01,
             _ => Head::HeadZombieZA01,
         };
 
