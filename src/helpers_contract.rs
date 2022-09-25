@@ -22,3 +22,8 @@ where
 pub fn weights<const N: usize>() -> [u8; N] {
     get_random_arr_range(0, 100)
 }
+
+pub fn emit_log_event<'de>(model: impl Deserialize<'de> + Serialize) {
+    let value = near_sdk::serde_json::to_value(model).unwrap();
+    env::log_str(&format!("{}:{value}", crate::consts::EVENT_PREFIX));
+}
