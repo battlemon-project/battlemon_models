@@ -1,4 +1,5 @@
 use near_sdk::env;
+use near_sdk::serde::{Deserialize, Serialize};
 use rand_for_near::{distributions::uniform::SampleUniform, rngs::StdRng, Rng, SeedableRng};
 
 pub(crate) fn generate_id() -> String {
