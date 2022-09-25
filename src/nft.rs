@@ -13,11 +13,12 @@ pub use cap::*;
 pub use cloth::*;
 #[cfg(feature = "nft-contract")]
 pub use coldarm::*;
+#[cfg(feature = "nft-events")]
+pub use events::*;
 #[cfg(feature = "nft-contract")]
 pub use firearm::*;
 #[cfg(feature = "nft-contract")]
 pub use lemon::*;
-
 pub use token::*;
 
 #[cfg(feature = "nft-contract")]
@@ -28,6 +29,8 @@ mod cap;
 mod cloth;
 #[cfg(feature = "nft-contract")]
 mod coldarm;
+#[cfg(feature = "nft-events")]
+mod events;
 #[cfg(feature = "nft-contract")]
 mod firearm;
 #[cfg(feature = "nft-contract")]
