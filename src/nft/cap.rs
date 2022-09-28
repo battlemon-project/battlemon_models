@@ -3,9 +3,7 @@ use near_contract_standards::non_fungible_token::TokenId;
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
 
-#[derive(
-    Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, PartialEq, Debug,
-)]
+#[derive(Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, PartialEq, Debug)]
 #[serde(crate = "near_sdk::serde")]
 pub struct Cap {
     pub token_id: TokenId,
