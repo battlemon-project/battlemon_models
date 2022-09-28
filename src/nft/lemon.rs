@@ -2,7 +2,7 @@ use near_contract_standards::non_fungible_token::TokenId;
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
 
-use crate::nft::{Back, Cap, Cloth, ColdArm, FireArm};
+use crate::nft::{Back, Cap, Cloth, ColdArm, FireArm, Set};
 use crate::nft::{BuildUrlQuery, FromTraitWeights};
 
 #[derive(Serialize, Deserialize, BorshSerialize, BorshDeserialize, Clone, PartialEq, Debug)]
@@ -18,6 +18,7 @@ pub struct Lemon {
     pub cloth: Option<Cloth>,
     pub cap: Option<Cap>,
     pub back: Option<Back>,
+    pub sets: Vec<Set>,
 }
 
 const LEMON_TRAITS_COUNT: usize = 5;
@@ -66,6 +67,7 @@ impl FromTraitWeights<LEMON_TRAITS_COUNT> for Lemon {
             cloth: None,
             cap: None,
             back: None,
+            sets: Vec::new(),
         }
     }
 }
