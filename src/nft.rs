@@ -19,6 +19,9 @@ pub use events::*;
 pub use firearm::*;
 #[cfg(feature = "nft-contract")]
 pub use lemon::*;
+#[cfg(feature = "nft-contract")]
+pub use set::*;
+
 pub use token::*;
 
 #[cfg(feature = "nft-contract")]
@@ -35,6 +38,8 @@ mod events;
 mod firearm;
 #[cfg(feature = "nft-contract")]
 mod lemon;
+#[cfg(feature = "nft-contract")]
+mod set;
 mod token;
 
 #[cfg(feature = "nft-contract")]
@@ -47,6 +52,7 @@ pub enum NftKind {
     Cloth,
     Back,
     Cap,
+    Set,
 }
 
 #[cfg(feature = "nft-contract")]
@@ -59,6 +65,7 @@ pub enum ModelKind {
     Cloth(Cloth),
     Back(Back),
     Cap(Cap),
+    Set(Set),
 }
 
 #[cfg(feature = "nft-contract")]
@@ -71,6 +78,7 @@ impl BuildUrlQuery for ModelKind {
             Self::Cloth(cloth) => cloth.build_url_query(),
             Self::Back(back) => back.build_url_query(),
             Self::Cap(cap) => cap.build_url_query(),
+            Self::Set(set) => set.build_url_query(),
         }
     }
 }
