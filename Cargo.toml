@@ -5,7 +5,7 @@ edition = "2021"
 
 [features]
 # models for battlemon market contract
-market-contract = ["dep:near-sdk", "dep:rand_for_near"]
+market-contract = ["dep:near-sdk", "dep:rand_for_near", "dep:near-contract-standards"]
 # models for nft contract
 nft-contract = ["dep:near-sdk", "dep:near-contract-standards", "dep:rand_for_near"]
 # impl for converting among different markets models
